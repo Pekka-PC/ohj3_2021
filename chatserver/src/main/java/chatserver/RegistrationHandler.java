@@ -41,7 +41,7 @@ public class RegistrationHandler implements HttpHandler {
                     code = 400;
                     responseBody = "No content type in request";
                 }
-                if (contentType.equalsIgnoreCase("text/plain")) {
+                if (contentType.equalsIgnoreCase("application/plain")) {
                     InputStream stream = exchange.getRequestBody();
                     String text = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8)).lines()
                             .collect(Collectors.joining("\n"));
