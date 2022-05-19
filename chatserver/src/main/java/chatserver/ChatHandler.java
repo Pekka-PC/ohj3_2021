@@ -21,7 +21,6 @@ public class ChatHandler implements HttpHandler {
 
     private String responseBody = "";
     
-    //ArrayList<String> messages = new ArrayList<String>();
     JSONArray publicJarray = new JSONArray();
     @Override
     public void handle(HttpExchange exchange) throws IOException {
@@ -81,11 +80,6 @@ public class ChatHandler implements HttpHandler {
             ChatServer.log(text);
             stream.close();
 
-            //JSONArray array = new JSONArray();
-            //for(int i = 0; i < messages.size(); i++){
-            //    array.put(messages.get(i));
-            //}
-
             if (text.trim().length() > 0) {
                 processMessage(text);
                 exchange.sendResponseHeaders(code, -1);
@@ -105,11 +99,9 @@ public class ChatHandler implements HttpHandler {
     }
 
     private void processMessage(String text) {
-        //messages.add(text);
         JSONObject stringCarrier = new JSONObject();
         stringCarrier.put("msg: ", text);
         publicJarray.put(stringCarrier);
-        //publicJarray.put(text);
     }
 
     private int handleGetRequestFromClient(HttpExchange exchange) throws IOException, SQLException {
@@ -123,34 +115,12 @@ public class ChatHandler implements HttpHandler {
             byte [] bytes;
             responseBody = publicJarray.toString();
             ChatServer.log("Delivering" + " messages to client");
-            //ChatServer.log("Delivering" + messages.size() + " messages to client");
-            //byte [] bytes;
             bytes = responseBody.toString().getBytes("UTF-8");
             exchange.sendResponseHeaders(code, bytes.length);
             OutputStream os = exchange.getResponseBody();
             os.write(bytes);
             os.close();  
         }
-           //JSONArray viestit = new JSONArray(publicJarray);
-            //viestit.put(msg);
-            //msg.put(message);
-            //JSONArray message = new JSONArray();
-            //for(int i = 0; i < messages.size(); i++){
-            //    message.put(messages.get(i));
-            //}
-            //message.put(msg);
-              //  responseBody = publicJarray.toString();
-           //for (String message : messages) {
-        //    responseBody += message + "\n";
-        //}
-
-        //ChatServer.log("Delivering" + messages.size() + " messages to client");
-        //byte [] bytes;
-        //bytes = responseBody.toString().getBytes("UTF-8");
-        //exchange.sendResponseHeaders(code, bytes.length);
-        //OutputStream os = exchange.getResponseBody();
-        //os.write(bytes);
-        //os.close();  
         return code;
     }
 }
